@@ -81,7 +81,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision "puppet" do |puppet|
     puppet.module_path = "modules"
     puppet.manifests_path = "manifests"
-    puppet.manifest_file  = "hadoop.pp"
+    puppet.manifest_file  = "site.pp"
+  end
+
+  config.vm.provider "virtualbox" do |v|
+    v.name = "hadoop_node"
+    v.memory = 1024
+    v.cpus = 2
   end
 
   # Enable provisioning with chef solo, specifying a cookbooks path, roles
