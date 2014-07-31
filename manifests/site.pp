@@ -162,27 +162,28 @@ class hadoop_site_config {
     path    => "${hadoop_root}/etc/hadoop/mapred-site.xml",
     content => template('site/mapred-site.xml.erb'),
   }
-  file{'hadoop_key':
-    ensure => present,
-    path   => "${hadoop_user_home}/.ssh/id_dsa",
-    source => "${vagrant_data}/insecure_hadoop_key",
-    owner  => $hadoop_user,
-    mode   => 0600,
-  }
-  file{'hadoop_public_key':
-    ensure => present,
-    path   => "${hadoop_user_home}/.ssh/id_dsa.pub",
-    source => "${vagrant_data}/insecure_hadoop_key.pub",
-    owner  => $hadoop_user,
-    mode   => 0644,
-  }
-  file{'hadoop_authorized_keys':
-    ensure  => present,
-    require => [File['hadoop_public_key'], File['hadoop_key']],
-    path    => "${hadoop_user_home}/.ssh/authorized_keys",
-    source  => "${hadoop_user_home}/id_dsa.pub",
-    mode    => 0600,
-  }
+  ## Not working yet:
+  # file{'hadoop_key':
+  #   ensure => present,
+  #   path   => "${hadoop_user_home}/.ssh/id_dsa",
+  #   source => "${vagrant_data}/insecure_hadoop_key",
+  #   owner  => $hadoop_user,
+  #   mode   => 0600,
+  # }
+  # file{'hadoop_public_key':
+  #   ensure => present,
+  #   path   => "${hadoop_user_home}/.ssh/id_dsa.pub",
+  #   source => "${vagrant_data}/insecure_hadoop_key.pub",
+  #   owner  => $hadoop_user,
+  #   mode   => 0644,
+  # }
+  # file{'hadoop_authorized_keys':
+  #   ensure  => present,
+  #   require => [File['hadoop_public_key'], File['hadoop_key']],
+  #   path    => "${hadoop_user_home}/.ssh/authorized_keys",
+  #   source  => "${hadoop_user_home}/id_dsa.pub",
+  #   mode    => 0600,
+  # }
 }
 
 include hadoop_site_config
